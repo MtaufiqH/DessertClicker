@@ -13,6 +13,13 @@ import com.example.dessertclicker.databinding.ActivityMainBinding
 import timber.log.Timber
 
 private const val TAG = "MainActivity"
+
+
+// key of state data
+const val KEY_REVENUE = "revenue_key"
+const val KEY_DESSERT_SOLD = "dessert_sold_key"
+const val KEY_TIMER_SECONDS = "timer_seconds_key"
+
 class MainActivity : AppCompatActivity() {
 	
 	private var _revenue = 0
@@ -61,6 +68,14 @@ class MainActivity : AppCompatActivity() {
 		
 		// dessert timer object
 		dessertTimer = DessertTimer(this.lifecycle)
+		
+		if (savedInstanceState != null){
+			_revenue = savedInstanceState.getInt(KEY_REVENUE,0)
+			dessertSold = savedInstanceState.getInt(KEY_DESSERT_SOLD,0)
+			dessertTimer.secondsCount = savedInstanceState.getInt(KEY_TIMER_SECONDS,0)
+			showCurrentDessert()
+		}
+		
 		
 		
 		
@@ -184,6 +199,16 @@ class MainActivity : AppCompatActivity() {
 	override fun onRestart() {
 		super.onRestart()
 		Timber.i("On Restart Called")
+	}
+	
+	
+	override fun onSaveInstanceState(outState: Bundle) {
+		super.onSaveInstanceState(outState)
+		Timber.i("On saveInstance state Called")
+		
+		outState.putInt(KEY_REVENUE,_revenue)
+		outState.putInt(KEY_DESSERT_SOLD,dessertSold)
+		outState.putInt(KEY_TIMER_SECONDS,dessertTimer.secondsCount)
 	}
 	
 }
