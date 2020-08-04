@@ -82,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/green"
-            android:text='@{"$" + revenue.toString()}'
+            android:text="@{'$' + revenue.toString()}"
             android:textSize="@dimen/large_text_size"
             app:layout_constraintBottom_toTopOf="@+id/margin_bottom_guide"
             app:layout_constraintEnd_toStartOf="@+id/guideline7"
@@ -97,7 +97,7 @@
             android:fontFamily="sans-serif-medium"
             android:paddingTop="@dimen/default_spacing"
             android:textSize="@dimen/medium_text_size"
-            android:text="@{amountSold.toString()"
+            android:text="@{amountSold.toString()}"
             app:layout_constraintBottom_toTopOf="@+id/revenueText"
             app:layout_constraintEnd_toStartOf="@+id/guideline7"
             tools:text="12" />
