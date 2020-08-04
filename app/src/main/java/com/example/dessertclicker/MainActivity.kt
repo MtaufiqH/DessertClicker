@@ -2,6 +2,7 @@ package com.example.dessertclicker
 
 import android.content.ActivityNotFoundException
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -9,7 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ShareCompat
 import androidx.databinding.DataBindingUtil
 import com.example.dessertclicker.databinding.ActivityMainBinding
+import timber.log.Timber
 
+private const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity() {
 	
 	private var _revenue = 0
@@ -50,7 +53,10 @@ class MainActivity : AppCompatActivity() {
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+		
+		Timber.i("onCreate: called")
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+		
 		
 		
 		binding.apply {
@@ -140,4 +146,38 @@ class MainActivity : AppCompatActivity() {
 		return super.onOptionsItemSelected(item)
 		
 	}
+	
+	
+	override fun onStart() {
+		super.onStart()
+		Timber.i("onStart: called")
+	}
+	
+	
+	override fun onResume() {
+		super.onResume()
+		Timber.i("On Resume Called")
+	}
+	
+	override fun onPause() {
+		super.onPause()
+		Timber.i("On Pause Called")
+	}
+	
+	override fun onStop() {
+		super.onStop()
+		Timber.i("On Stop Called")
+	}
+	
+	override fun onDestroy() {
+		super.onDestroy()
+		Timber.i("On Destroy Called")
+	}
+	
+	
+	override fun onRestart() {
+		super.onRestart()
+		Timber.i("On Restart Called")
+	}
+	
 }
