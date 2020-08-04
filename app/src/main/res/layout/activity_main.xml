@@ -64,7 +64,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/cupcake"/>
+            tools:src="@drawable/cupcake" />
+
         <View
             android:id="@+id/white_background"
             android:layout_width="0dp"
@@ -80,11 +81,12 @@
             android:id="@+id/revenueText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="$92"
             android:textColor="@color/green"
+            android:text='@{"$" + revenue.toString()}'
             android:textSize="@dimen/large_text_size"
             app:layout_constraintBottom_toTopOf="@+id/margin_bottom_guide"
-            app:layout_constraintEnd_toStartOf="@+id/guideline7" />
+            app:layout_constraintEnd_toStartOf="@+id/guideline7"
+            tools:text="$92" />
 
 
         <TextView
@@ -94,10 +96,11 @@
             android:layout_marginBottom="@dimen/default_spacing"
             android:fontFamily="sans-serif-medium"
             android:paddingTop="@dimen/default_spacing"
-            tools:text="12"
             android:textSize="@dimen/medium_text_size"
+            android:text="@{amountSold.toString()"
             app:layout_constraintBottom_toTopOf="@+id/revenueText"
-            app:layout_constraintEnd_toStartOf="@+id/guideline7" />
+            app:layout_constraintEnd_toStartOf="@+id/guideline7"
+            tools:text="12" />
 
         <TextView
             android:id="@+id/dessertSoldText"
@@ -105,10 +108,16 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
             android:text="@string/dessert_sold"
-            android:textSize="@dimen/medium_text_size"
             android:textColor="@color/grey"
+            android:textSize="@dimen/medium_text_size"
             app:layout_constraintBottom_toBottomOf="@+id/amountSoldText"
             app:layout_constraintStart_toStartOf="@+id/guideline6" />
+
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

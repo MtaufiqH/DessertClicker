@@ -1,7 +1,13 @@
 package com.example.dessertclicker
 
+import android.content.ActivityNotFoundException
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ShareCompat
 import androidx.databinding.DataBindingUtil
 import com.example.dessertclicker.databinding.ActivityMainBinding
 
@@ -37,21 +43,95 @@ class MainActivity : AppCompatActivity() {
         Dessert(R.drawable.lollipop, 3000, 4000),
         Dessert(R.drawable.marshmallow, 4000, 8000),
         Dessert(R.drawable.nougat, 5000, 16000),
-        Dessert(R.drawable.oreo, 6000, 20000))
+        Dessert(R.drawable.oreo, 6000, 20000)
+    )
 
 
     private var currentDessert = allDessert[0]
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
 
         binding.apply {
+
+            dessertButton.setOnClickListener {
+                onDessertClicked()
+            }
+
+            // set text to the right values
             revenue = _revenue
             amountSold = dessertSold
 
 
+            // make sure the correct dessert is showing
+            dessertButton.setImageResource(currentDessert.imageId)
         }
+
+    }
+
+    /**
+     *   update the score when the dessert is clicked. possibly show new dessert
+     * */
+
+    private fun onDessertClicked() {
+        // update the score
+        _revenue += currentDessert.price
+        dessertSold++
+
+        binding.revenue = _revenue
+        binding.amountSold = dessertSold
+
+        //show the new dessert
+        showCurrentDessert()
+
+
+    }
+
+    // determine which  dessert to show
+    private fun showCurrentDessert() {
+        var newDessert = allDessert[0]
+        for (dessert in allDessert) {
+            if (dessertSold >= dessert.startProductionsAmount) {
+                newDessert = dessert
+            }
+            else break
+        }
+
+        // if the new dessert is actually different from current dessert, update the image
+    if (newDessert != currentDessert){
+        currentDessert = newDessert
+        binding.dessertButton.setImageResource(newDessert.imageId)
+    }
+
+    }
+
+
+
+    // menu
+    private fun shareMenus(){
+        val shareIntent = ShareCompat.IntentBuilder.from(this)
+            .setText(getString(R.string.share_text, dessertSold, _revenue))
+            .setType("text/plain")
+            .intent
+
+        try {
+            startActivity(shareIntent)
+        } catch (ex: ActivityNotFoundException){
+            Toast.makeText(this,getString(R.string.sharing_not_available), Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        return super.onCreateOptionsMenu(menu)
+
+
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return super.onOptionsItemSelected(item)
     }
 }
